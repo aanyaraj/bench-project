@@ -46,5 +46,13 @@ jobs:
       - name: push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/bench-project:latest
 
+      # Step 9: Deploy to ECS
+      - name: Deploy to AWS ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ecs-task-def.json
+          service: your-ecs-service
+          cluster: your-ecs-cluster
+          wait-for-service-stability: true
       
       
