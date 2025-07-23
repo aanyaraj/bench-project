@@ -59,7 +59,7 @@ jobs:
         id: render-task
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ecs/task-definition.json
+          task-definition: task-definition.json
           container-name: bench-container
           image: ${{ env.IMAGE_TAG }}
 
