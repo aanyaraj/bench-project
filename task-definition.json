@@ -1,0 +1,22 @@
+{
+  "family": "TestECSCluster-task",
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "requiresCompatibilities": ["FARGATE"],
+  "executionRoleArn": "arn:aws:iam::851725611857:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "bench-container",
+      "image": "aanya02/bench-project:latest",
+      "portMappings": [
+        {
+          "containerPort": 8090,
+          "hostport":8090,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true
+    }
+  ]
+}
