@@ -1,0 +1,18 @@
+{
+  "family": "benchproject-task",
+  "containerDefinitions": [
+    {
+      "name": "benchproject",
+      "image": "yourdockerhubusername/benchproject:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080
+        }
+      ]
+    }
+  ]
+}
