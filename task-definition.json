@@ -12,7 +12,6 @@
       "portMappings": [
         {
           "containerPort": 8090,
-          "hostport":8090,
           "protocol": "tcp"
         }
       ],
