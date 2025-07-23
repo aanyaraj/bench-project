@@ -1,18 +1,22 @@
 {
-  "family": "benchproject-task",
+  "family": "TestECSCluster-task",
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "requiresCompatibilities": ["FARGATE"],
+  "executionRoleArn": "arn:aws:iam::851725611857:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
-      "name": "benchproject",
-      "image": "yourdockerhubusername/benchproject:latest",
-      "memory": 512,
-      "cpu": 256,
-      "essential": true,
+      "name": "bench-container",
+      "image": "aanya02/bench-project:latest",
       "portMappings": [
         {
-          "containerPort": 8080,
-          "hostPort": 8080
+          "containerPort": 8090,
+          "hostport":8090,
+          "protocol": "tcp"
         }
-      ]
+      ],
+      "essential": true
     }
   ]
 }
