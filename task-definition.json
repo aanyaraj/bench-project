@@ -4,7 +4,7 @@
   "cpu": "256",
   "memory": "512",
   "requiresCompatibilities": ["FARGATE"],
-  "executionRoleArn": "arn:aws:iam::851725611857:role/ecsTaskExecutionRole",
+  "executionRoleArn": "arn:aws:iam::992382394001:role/ecs-task-execution1",
   "containerDefinitions": [
     {
       "name": "bench-container",
