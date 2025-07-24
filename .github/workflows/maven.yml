@@ -37,31 +37,25 @@ jobs:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
  
-      # Step 7: Set image tags with timestamp
-      - name: Set timestamp image tag
-        id: tag
-        run: |
-          TIMESTAMP=$(date -u +'%Y%m%d%H%M%S')
-          echo "IMAGE_TAG=${{ secrets.DOCKER_USERNAME }}/bench-project:$TIMESTAMP" >> $GITHUB_ENV
-          echo "LATEST_TAG=${{ secrets.DOCKER_USERNAME }}/bench-project:latest" >> $GITHUB_ENV
  
-      # Step 8: Build Docker image
-      - name: Build Docker image
-        run: docker build -t $IMAGE_TAG -t $LATEST_TAG .
- 
-      # Step 9: Push Docker image
-      - name: Push Docker image
+      # Step 8: Build and push Docker image
+      - name: Build and push image to Docker Hub
+        id: build-image
+        env:
+         IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker push $IMAGE_TAG
-          docker push $LATEST_TAG
+         IMAGE_NAME=${{ secrets.DOCKER_USERNAME }}/github-actions-java:$IMAGE_TAG
+         docker build -t $IMAGE_NAME .
+         docker push $IMAGE_NAME
+         echo "image=$IMAGE_NAME" >> $GITHUB_OUTPUT
 
       - name: Render ECS task definition with new image
-        id: render-task
+        id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
           container-name: bench-container
-          image: ${{ env.IMAGE_TAG }}
+          image: ${{ steps.build-image.outputs.image }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -74,7 +68,7 @@ jobs:
       - name: Deploy updated task definition to ECS Fargate
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.render-task.outputs.task-definition }}
-          service: TestECSCluster-task-service-nqqhpftp 
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ecs-template1-ECSService-xyWrjFNNTJR1 
           cluster: TestECSCluster
           wait-for-service-stability: true
