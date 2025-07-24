@@ -6,7 +6,6 @@
   "requiresCompatibilities": ["FARGATE"],
   "executionRoleArn": "arn:aws:iam::992382394001:role/ecs-task-execution1",
   "containerDefinitions": [
-    
     {
       "name": "bench-container",
       "image": "aanya02/bench-project:latest",
@@ -17,7 +16,6 @@
         }
       ],
       "essential": true
-}
     }
   ]
 }
