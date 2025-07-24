@@ -4,18 +4,21 @@
   "cpu": "256",
   "memory": "512",
   "requiresCompatibilities": ["FARGATE"],
-  "executionRoleArn": "arn:aws:iam::992382394001:role/ecs-task-execution1",
+  "executionRoleArn": "arn:aws:iam::058264356295:role/ecs-Task-ExecutionRole",
   "containerDefinitions": [
+    
     {
       "name": "bench-container",
       "image": "aanya02/bench-project:latest",
       "portMappings": [
         {
           "containerPort": 8080,
+          "hostport": 8080,
           "protocol": "tcp"
         }
       ],
       "essential": true
+      
     }
   ]
 }
